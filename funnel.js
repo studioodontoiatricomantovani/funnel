@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
       next: val => val === "altro" ? "contatto" : val
     },
 
-    // RAMO 1: Dolore (tutte le domande su un'unica pagina)
+    // RAMO 1: Dolore
     dolore: {
       question: "Raccontaci il tuo dolore",
       fields: [
@@ -91,10 +91,10 @@ document.addEventListener("DOMContentLoaded", () => {
           name: "est-colore",
           question: "Cosa ti infastidisce del tuo sorriso?",
           options: [
-            { v: "colore",   label: "Colore" },
-            { v: "forma",    label: "Forma" },
-            { v: "posizione",label: "Posizione" },
-            { v: "altro",    label: "Altro" }
+            { v: "colore", label: "Colore" },
+            { v: "forma", label: "Forma" },
+            { v: "posizione", label: "Posizione" },
+            { v: "altro", label: "Altro" }
           ]
         },
         {
@@ -120,9 +120,9 @@ document.addEventListener("DOMContentLoaded", () => {
           name: "est-urgenza",
           question: "Quanto è urgente?",
           options: [
-            { v: "non-urgente",     label: "Non urgente" },
-            { v: "nei-prossimi-mesi",label: "Nei prossimi mesi" },
-            { v: "subito",          label: "Subito" }
+            { v: "non-urgente", label: "Non urgente" },
+            { v: "nei-prossimi-mesi", label: "Nei prossimi mesi" },
+            { v: "subito", label: "Subito" }
           ]
         }
       ],
@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
           options: [
             { v: "sopra", label: "Sopra" },
             { v: "sotto", label: "Sotto" },
-            { v: "piu",   label: "Più di uno" }
+            { v: "piu", label: "Più di uno" }
           ]
         },
         {
@@ -148,10 +148,10 @@ document.addEventListener("DOMContentLoaded", () => {
           name: "man-tempo",
           question: "Da quanto tempo manca?",
           options: [
-            { v: "giorni",   label: "Giorni" },
-            { v: "settimane",label: "Settimane" },
-            { v: "mesi",     label: "Mesi" },
-            { v: "anni",     label: "Anni" }
+            { v: "giorni", label: "Giorni" },
+            { v: "settimane", label: "Settimane" },
+            { v: "mesi", label: "Mesi" },
+            { v: "anni", label: "Anni" }
           ]
         },
         {
@@ -159,19 +159,19 @@ document.addEventListener("DOMContentLoaded", () => {
           name: "man-soluzione",
           question: "Soluzione desiderata?",
           options: [
-            { v: "fissa",      label: "Fissa" },
+            { v: "fissa", label: "Fissa" },
             { v: "rimovibile", label: "Rimovibile" },
-            { v: "non-so",     label: "Non so" }
+            { v: "non-so", label: "Non so" }
           ]
         },
         {
           type: "radio",
           name: "man-problema",
-          question: "È un problema estetico o funzionale?",
+          question: "Estetico o funzionale?",
           options: [
-            { v: "estetico",    label: "Estetico" },
-            { v: "funzionale",  label: "Funzionale" },
-            { v: "entrambi",    label: "Entrambi" }
+            { v: "estetico", label: "Estetico" },
+            { v: "funzionale", label: "Funzionale" },
+            { v: "entrambi", label: "Entrambi" }
           ]
         }
       ],
@@ -185,17 +185,17 @@ document.addEventListener("DOMContentLoaded", () => {
         {
           type: "radio",
           name: "ig-last",
-          question: "Ultima igiene dentale?",
+          question: "Quando hai fatto l’ultima igiene dentale?",
           options: [
             { v: "meno-6m", label: "Meno di 6 mesi fa" },
-            { v: "piu-6m",  label: "Più di 6 mesi fa" },
+            { v: "piu-6m", label: "Più di 6 mesi fa" },
             { v: "non-ricordo", label: "Non ricordo" }
           ]
         },
         {
           type: "radio",
           name: "ig-sangue",
-          question: "Noti sanguinamento?",
+          question: "Noti sanguinamento quando ti lavi i denti?",
           options: [
             { v: "si", label: "Sì" },
             { v: "no", label: "No" }
@@ -213,11 +213,11 @@ document.addEventListener("DOMContentLoaded", () => {
         {
           type: "radio",
           name: "ig-tempo-giorno",
-          question: "Tempo quotidiano per igiene orale?",
+          question: "Quanto tempo dedichi ogni giorno all’igiene orale?",
           options: [
-            { v: "meno-1",    label: "Meno di 1 minuto" },
-            { v: "1-2",       label: "1–2 minuti" },
-            { v: "piu-2",     label: "Più di 2 minuti" }
+            { v: "meno-1", label: "Meno di 1 minuto" },
+            { v: "1-2", label: "1–2 minuti" },
+            { v: "piu-2", label: "Più di 2 minuti" }
           ]
         }
       ],
@@ -231,17 +231,17 @@ document.addEventListener("DOMContentLoaded", () => {
         {
           type: "radio",
           name: "or-funzione",
-          question: "Perché desideri ortodonzia?",
+          question: "Perché desideri un trattamento ortodontico?",
           options: [
             { v: "funzionale", label: "Funzionale" },
-            { v: "estetico",   label: "Estetico" },
-            { v: "entrambi",   label: "Entrambi" }
+            { v: "estetico", label: "Estetico" },
+            { v: "entrambi", label: "Entrambi" }
           ]
         },
         {
           type: "radio",
           name: "or-prepast",
-          question: "Hai fatto ortodonzia in passato?",
+          question: "Hai già fatto ortodonzia in passato?",
           options: [
             { v: "si", label: "Sì" },
             { v: "no", label: "No" }
@@ -250,11 +250,11 @@ document.addEventListener("DOMContentLoaded", () => {
         {
           type: "radio",
           name: "or-soluzione",
-          question: "Soluzione desiderata?",
+          question: "Vorresti una soluzione fissa o trasparente?",
           options: [
-            { v: "fissa",       label: "Fissa" },
+            { v: "fissa", label: "Fissa" },
             { v: "trasparente", label: "Trasparente" },
-            { v: "non-so",      label: "Non so" }
+            { v: "non-so", label: "Non so" }
           ]
         },
         {
@@ -262,9 +262,9 @@ document.addEventListener("DOMContentLoaded", () => {
           name: "or-motivazione",
           question: "Quanto sei motivato ad iniziare?",
           options: [
-            { v: "poco",     label: "Poco" },
-            { v: "abbastanza",label: "Abbastanza" },
-            { v: "molto",    label: "Molto" }
+            { v: "poco", label: "Poco" },
+            { v: "abbastanza", label: "Abbastanza" },
+            { v: "molto", label: "Molto" }
           ]
         }
       ],
@@ -273,12 +273,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Schermata finale: raccolta contatti
     contatto: {
-      question: "Lasciaci i tuoi recapiti e ti richiameremo presto",
+      question: "Lasciaci i tuoi recapiti e ti richiameremo al più presto",
       fields: [
-        { type: "text",   name: "name",  placeholder: "Nome e Cognome", required: true },
-        { type: "tel",    name: "phone", placeholder: "Numero di telefono", required: true },
-        { type: "email",  name: "email", placeholder: "Email", required: true },
-        { type: "textarea", name: "note", placeholder: "Note aggiuntive (facoltativo)" }
+        { type: "text",     name: "name",  placeholder: "Nome e Cognome", required: true },
+        { type: "tel",      name: "phone", placeholder: "Numero di telefono", required: true },
+        { type: "email",    name: "email", placeholder: "Email", required: true },
+        { type: "textarea", name: "note",  placeholder: "Note aggiuntive (facoltativo)" }
       ]
     }
   };
@@ -286,46 +286,32 @@ document.addEventListener("DOMContentLoaded", () => {
   // Rendering di un singolo step
   function renderStep() {
     const stepDef = steps[state.step];
-    let html = `<h2>${stepDef.question}</h2><form id="funnel-form">`;
+    let html = `<h2>${stepDef.question}</h2>`
+             + `<form id="funnel-form">`;
 
-    // opzioni radio/slider
+    // radio generiche (solo in main)
     if (stepDef.options) {
       for (const opt of stepDef.options) {
-        html += `
-          <label>
-            <input type="radio" name="choice" value="${opt.value}">
-            ${opt.label}
-          </label>`;
+        html += `<label><input type="radio" name="choice" value="${opt.value}"> ${opt.label}</label>`;
       }
     }
 
-    // campi multipli (branches e contatto)
+    // campi dettagliati
     if (stepDef.fields) {
       for (const f of stepDef.fields) {
         if (f.type === "radio") {
           html += `<p>${f.question}</p>`;
           for (const o of f.options) {
-            html += `
-              <label>
-                <input type="radio" name="${f.name}" value="${o.v}">
-                ${o.label}
-              </label>`;
+            html += `<label><input type="radio" name="${f.name}" value="${o.v}"> ${o.label}</label>`;
           }
-        }
-        else if (f.type === "range") {
-          html += `<label>${f.question}<br>
-            <input type="range" name="${f.name}" min="${f.attrs.min}" max="${f.attrs.max}" value="${f.attrs.value}">
-          </label>`;
-        }
-        else if (f.type === "textarea") {
+        } else if (f.type === "range") {
+          html += `<label>${f.question}<br>`
+                + `<input type="range" name="${f.name}" min="${f.attrs.min}" max="${f.attrs.max}" value="${f.attrs.value}">`
+                + `</label>`;
+        } else if (f.type === "textarea") {
           html += `<textarea name="${f.name}" placeholder="${f.placeholder}"></textarea>`;
-        }
-        else {
-          html += `<input
-            type="${f.type}"
-            name="${f.name}"
-            placeholder="${f.placeholder}"
-            ${f.required ? "required" : ""}>`;
+        } else {
+          html += `<input type="${f.type}" name="${f.name}" placeholder="${f.placeholder}" ${f.required?"required":""}>`;
         }
       }
     }
@@ -335,8 +321,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (state.step !== "main") {
       html += `<button type="button" id="btn-back">Indietro</button>`;
     }
-    html += `<button type="submit">Avanti</button></div>`;
-    html += `</form>`;
+    html += `<button type="submit">Avanti</button>`
+         + `</div></form>`;
 
     app.innerHTML = html;
     attachListeners();
@@ -344,12 +330,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Collego eventi a form e bottoni
   function attachListeners() {
-    const form = document.getElementById("funnel-form");
-    form.addEventListener("submit", onNext);
-
-    const back = document.getElementById("btn-back");
-    if (back) back.addEventListener("click", () => {
-      // se siamo in contatto torniamo al ramo originario
+    document.getElementById("funnel-form")
+            .addEventListener("submit", onNext);
+    const backBtn = document.getElementById("btn-back");
+    if (backBtn) backBtn.addEventListener("click", () => {
       state.step = state.answers._branch || "main";
       renderStep();
     });
@@ -362,16 +346,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Se siamo nella schermata finale di contatto
     if (state.step === "contatto") {
-      // raccolgo tutti i campi contatto
       for (const [k, v] of formData.entries()) {
         state.answers[k] = v;
       }
-      console.log("Tutte le risposte:", state.answers);
-      alert("Grazie! Ti contatteremo presto.");
+      console.log("Risposte complete:", state.answers);
+      alert("Grazie! Ti richiameremo presto.");
       return;
     }
 
-    // passo iniziale o ramo
+    // Se siamo nel passo iniziale
     if (state.step === "main") {
       const choice = formData.get("choice");
       if (!choice) {
@@ -379,28 +362,28 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
       state.answers.choice = choice;
-      state.answers._branch = choice;       // salvo ramo per il back
-      state.step = steps.main.next(choice);
+      state.answers._branch = choice;
+      state.step = (typeof steps.main.next === "function")
+                   ? steps.main.next(choice)
+                   : steps.main.next;
       renderStep();
       return;
     }
 
-    // siamo in un ramo: raccolgo tutti i campi definiti in fields
+    // Siamo in un ramo intermedio
     const defs = steps[state.step].fields || [];
     for (const f of defs) {
       const val = formData.get(f.name);
       if (f.required && !val) {
-        alert(`Compila il campo "${f.name}" per proseguire.`);
+        alert(`Per favore, compila il campo "${f.name}".`);
         return;
       }
       state.answers[f.name] = val;
     }
-    // poi vado al passo successivo definito
     state.step = steps[state.step].next || "contatto";
     renderStep();
   }
 
-  // Lancio la prima renderizzazione
+  // Avvia il funnel
   renderStep();
-
 });
