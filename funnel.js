@@ -346,29 +346,29 @@ html += `</div></form>`;
 
 // Se siamo nella schermata finale di contatto
 if (state.step === "contatto") {
-  // 1) Raccogli tutti i campi
+  // 1) Raccogli i campi in state.answers
   for (const [k, v] of formData.entries()) {
     state.answers[k] = v;
   }
 
-  // 2) Invia via POST al tuo Web App
-  fetch("https://script.google.com/macros/s/AKfycbxIuzLiLlqYapbrdcjVe5Sj7uppOo0T697hKh9t5fqmuOAlwBG_lVHUnh6lmGURvUBz/exec", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(state.answers)
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.result === "success") {
-      alert("Grazie! Risposte inviate con successo.");
-    } else {
-      alert("Errore invio: " + data.error);
-    }
-  })
-  .catch(err => {
-    alert("Impossibile inviare dati: " + err.message);
+  // 2) Creiamo dinamicamente un <form> per inviare i dati
+  const form = document.createElement("form");
+  form.method = "POST";
+  form.action = "https://script.google.com/macros/s/AKfycbzV8RXnv1qfikBiB825rXnmkOy6jji_9wQDAda3Tn2ia7BuVjPEl_hzkROYnVJIh1nZ/exec";
+  form.style.display = "none";
+
+  // 3) Aggiungiamo tutti i valori come input hidden
+  Object.entries(state.answers).forEach(([key, val]) => {
+    const input = document.createElement("input");
+    input.type  = "hidden";
+    input.name  = key;
+    input.value = val;
+    form.appendChild(input);
   });
 
+  document.body.appendChild(form);
+  form.submit();            // invia la POST
+  alert("Grazie! Risposte inviate con successo.");
   return;
 }
 
