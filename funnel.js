@@ -368,7 +368,7 @@ if (state.step === "contatto") {
 
   document.body.appendChild(form);
   form.submit();            // invia la POST
-  alert("Grazie! Risposte inviate con successo.");
+  alert("Grazie! Ti ricontatteremo al più presto.");
   return;
 }
 
