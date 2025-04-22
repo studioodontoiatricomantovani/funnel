@@ -315,14 +315,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
     }
-
-    // bottoni avanti/indietro
-    html += `<div style="margin-top:1rem;">`;
-    if (state.step !== "main") {
-      html += `<button type="button" id="btn-back">Indietro</button>`;
-    }
-    html += `<button type="submit">Avanti</button>`
-         + `</div></form>`;
+    
+// bottoni avanti/indietro
+html += `<div class="funnel-buttons">`;
+if (state.step !== "main") {
+  html += `<button type="button" id="btn-back">Indietro</button>`;
+}
+html += `<button type="submit">Avanti</button>`;
+html += `</div></form>`;
 
     app.innerHTML = html;
     attachListeners();
