@@ -344,20 +344,27 @@ html += `</div></form>`;
     e.preventDefault();
     const formData = new FormData(e.target);
 
-// Se siamo nella schermata finale di contatto
+// ── blocco da incollare interamente ──
 if (state.step === "contatto") {
-  // 1) Raccogli i campi in state.answers
+  // 1) Raccogli tutte le risposte
   for (const [k, v] of formData.entries()) {
     state.answers[k] = v;
   }
 
-  // 2) Creiamo dinamicamente un <form> per inviare i dati
+  // 2) Creiamo un iframe nascosto per il submit in background
+  const iframe = document.createElement("iframe");
+  iframe.name = "hidden_iframe";
+  iframe.style.display = "none";
+  document.body.appendChild(iframe);
+
+  // 3) Creiamo un form nascosto che punta all’iframe
   const form = document.createElement("form");
   form.method = "POST";
   form.action = "https://script.google.com/macros/s/AKfycbzV8RXnv1qfikBiB825rXnmkOy6jji_9wQDAda3Tn2ia7BuVjPEl_hzkROYnVJIh1nZ/exec";
+  form.target = "hidden_iframe";
   form.style.display = "none";
 
-  // 3) Aggiungiamo tutti i valori come input hidden
+  // 4) Aggiungiamo ogni campo come input hidden
   Object.entries(state.answers).forEach(([key, val]) => {
     const input = document.createElement("input");
     input.type  = "hidden";
@@ -367,10 +374,16 @@ if (state.step === "contatto") {
   });
 
   document.body.appendChild(form);
-  form.submit();            // invia la POST
-  alert("Grazie! Ti ricontatteremo al più presto.");
+  form.submit();   // invio in background, la pagina principale NON cambia
+
+  // 5) Messaggio di conferma e redirect manuale alla home
+  alert("Grazie per aver risposto! Ti contatteremo al più presto.");
+  window.location.href = "https://www.mantovanisavona.com";
+
   return;
 }
+// ────────────────────────────────────────
+
 
 
     // Se siamo nel passo iniziale
