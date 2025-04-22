@@ -1,135 +1,406 @@
+// funnel.js
+// Versione completa del funnel odontoiatrico Mantovani
+// Tutto il funnel è reso in un unico container #app
+// Logica interattiva, ramificazioni e raccolta dati in JSON
 
 document.addEventListener("DOMContentLoaded", () => {
   const app = document.getElementById("app");
 
+  // Stato dell’app: step corrente e risposte
   const state = {
     step: "main",
-    answers: {},
+    answers: {}
   };
 
+  // Definizione di tutti i "passi" del funnel
   const steps = {
+    // Passo iniziale
     main: {
       question: "Quale di queste opzioni descrive meglio il tuo problema?",
       options: [
-        { value: "dolore", label: "Ho mal di denti" },
-        { value: "estetica", label: "Non mi piace il mio sorriso" },
-        { value: "mancante", label: "Ho un dente mancante" },
-        { value: "igiene", label: "Penso di aver bisogno di un’igiene dentale" },
-        { value: "ortodonzia", label: "Vorrei raddrizzare i denti" },
-        { value: "altro", label: "Altro" },
+        { value: "dolore",    label: "Ho mal di denti" },
+        { value: "estetica",  label: "Non mi piace il mio sorriso" },
+        { value: "mancante",  label: "Ho un dente mancante" },
+        { value: "igiene",    label: "Penso di aver bisogno di un’igiene dentale" },
+        { value: "ortodonzia",label: "Vorrei raddrizzare i denti" },
+        { value: "altro",     label: "Altro" }
       ],
-      next: (val) => (val === "altro" ? "contatto" : val),
+      // funzione che restituisce il prossimo passo
+      next: val => val === "altro" ? "contatto" : val
     },
+
+    // RAMO 1: Dolore (tutte le domande su un'unica pagina)
     dolore: {
-      question: "Dove si trova il dolore?",
-      options: [
-        { value: "sopra", label: "Sopra" },
-        { value: "sotto", label: "Sotto" },
-        { value: "tutta", label: "Tutta la bocca" },
+      question: "Raccontaci il tuo dolore",
+      fields: [
+        {
+          type: "radio",
+          name: "dolore-loc",
+          question: "Dove si trova il dolore?",
+          options: [
+            { v: "sopra", label: "Sopra" },
+            { v: "sotto", label: "Sotto" },
+            { v: "tutta", label: "Tutta la bocca" }
+          ]
+        },
+        {
+          type: "range",
+          name: "dolore-intensita",
+          question: "Intensità del dolore (0 = nessuno, 10 = insopportabile)",
+          attrs: { min: 0, max: 10, value: 5 }
+        },
+        {
+          type: "radio",
+          name: "dolore-tempo",
+          question: "Da quanto tempo hai questo dolore?",
+          options: [
+            { v: "settimana", label: "Meno di 1 settimana" },
+            { v: "piu-settimane", label: "Più di 1 settimana" },
+            { v: "mesi", label: "Da mesi" }
+          ]
+        },
+        {
+          type: "radio",
+          name: "dolore-tipo",
+          question: "Che tipo di dolore senti?",
+          options: [
+            { v: "puntuale", label: "Puntuale" },
+            { v: "diffuso", label: "Diffuso" },
+            { v: "intermittente", label: "Intermittente" }
+          ]
+        },
+        {
+          type: "radio",
+          name: "dolore-pre",
+          question: "Hai già fatto qualcosa per alleviarlo?",
+          options: [
+            { v: "si", label: "Sì" },
+            { v: "no", label: "No" }
+          ]
+        }
       ],
-      next: "contatto",
+      next: "contatto"
     },
+
+    // RAMO 2: Estetica
     estetica: {
-      question: "Come potrebbe aiutarti un trattamento estetico?",
-      options: [
-        { value: "migliorare", label: "Migliorare il sorriso" },
-        { value: "aggiustare", label: "Aggiustare un dente scheggiato" },
-        { value: "sbiancare", label: "Sbiancare i denti" },
+      question: "Parliamo di estetica",
+      fields: [
+        {
+          type: "radio",
+          name: "est-colore",
+          question: "Cosa ti infastidisce del tuo sorriso?",
+          options: [
+            { v: "colore",   label: "Colore" },
+            { v: "forma",    label: "Forma" },
+            { v: "posizione",label: "Posizione" },
+            { v: "altro",    label: "Altro" }
+          ]
+        },
+        {
+          type: "radio",
+          name: "est-prepast",
+          question: "Ti sei già rivolto a un dentista per questo?",
+          options: [
+            { v: "si", label: "Sì" },
+            { v: "no", label: "No" }
+          ]
+        },
+        {
+          type: "radio",
+          name: "est-evento",
+          question: "Hai un evento imminente per cui vuoi migliorare il sorriso?",
+          options: [
+            { v: "si", label: "Sì" },
+            { v: "no", label: "No" }
+          ]
+        },
+        {
+          type: "radio",
+          name: "est-urgenza",
+          question: "Quanto è urgente?",
+          options: [
+            { v: "non-urgente",     label: "Non urgente" },
+            { v: "nei-prossimi-mesi",label: "Nei prossimi mesi" },
+            { v: "subito",          label: "Subito" }
+          ]
+        }
       ],
-      next: "contatto",
+      next: "contatto"
     },
+
+    // RAMO 3: Dente Mancante
     mancante: {
-      question: "Dove si trova il dente mancante?",
-      options: [
-        { value: "sopra", label: "Sopra" },
-        { value: "sotto", label: "Sotto" },
-        { value: "piu", label: "Mi mancano più denti" },
+      question: "Dente mancante",
+      fields: [
+        {
+          type: "radio",
+          name: "man-loc",
+          question: "Dove si trova il dente mancante?",
+          options: [
+            { v: "sopra", label: "Sopra" },
+            { v: "sotto", label: "Sotto" },
+            { v: "piu",   label: "Più di uno" }
+          ]
+        },
+        {
+          type: "radio",
+          name: "man-tempo",
+          question: "Da quanto tempo manca?",
+          options: [
+            { v: "giorni",   label: "Giorni" },
+            { v: "settimane",label: "Settimane" },
+            { v: "mesi",     label: "Mesi" },
+            { v: "anni",     label: "Anni" }
+          ]
+        },
+        {
+          type: "radio",
+          name: "man-soluzione",
+          question: "Soluzione desiderata?",
+          options: [
+            { v: "fissa",      label: "Fissa" },
+            { v: "rimovibile", label: "Rimovibile" },
+            { v: "non-so",     label: "Non so" }
+          ]
+        },
+        {
+          type: "radio",
+          name: "man-problema",
+          question: "È un problema estetico o funzionale?",
+          options: [
+            { v: "estetico",    label: "Estetico" },
+            { v: "funzionale",  label: "Funzionale" },
+            { v: "entrambi",    label: "Entrambi" }
+          ]
+        }
       ],
-      next: "contatto",
+      next: "contatto"
     },
+
+    // RAMO 4: Igiene Dentale
     igiene: {
-      question: "Perché pensi di aver bisogno di un’igiene dentale?",
-      options: [
-        { value: "routine", label: "Igiene di routine" },
-        { value: "gengive", label: "Problemi gengivali" },
-        { value: "sensibilita", label: "Sensibilità dentale" },
+      question: "Igiene dentale",
+      fields: [
+        {
+          type: "radio",
+          name: "ig-last",
+          question: "Ultima igiene dentale?",
+          options: [
+            { v: "meno-6m", label: "Meno di 6 mesi fa" },
+            { v: "piu-6m",  label: "Più di 6 mesi fa" },
+            { v: "non-ricordo", label: "Non ricordo" }
+          ]
+        },
+        {
+          type: "radio",
+          name: "ig-sangue",
+          question: "Noti sanguinamento?",
+          options: [
+            { v: "si", label: "Sì" },
+            { v: "no", label: "No" }
+          ]
+        },
+        {
+          type: "radio",
+          name: "ig-sensibilita",
+          question: "Hai sensibilità dentale o gengivale?",
+          options: [
+            { v: "si", label: "Sì" },
+            { v: "no", label: "No" }
+          ]
+        },
+        {
+          type: "radio",
+          name: "ig-tempo-giorno",
+          question: "Tempo quotidiano per igiene orale?",
+          options: [
+            { v: "meno-1",    label: "Meno di 1 minuto" },
+            { v: "1-2",       label: "1–2 minuti" },
+            { v: "piu-2",     label: "Più di 2 minuti" }
+          ]
+        }
       ],
-      next: "contatto",
+      next: "contatto"
     },
+
+    // RAMO 5: Ortodonzia
     ortodonzia: {
-      question: "Perché desideri un trattamento ortodontico?",
-      options: [
-        { value: "occlusione", label: "Migliorare l’occlusione" },
-        { value: "raddrizzare", label: "Raddrizzare i denti" },
-        { value: "mandibola", label: "Allineare la mandibola" },
+      question: "Ortodonzia",
+      fields: [
+        {
+          type: "radio",
+          name: "or-funzione",
+          question: "Perché desideri ortodonzia?",
+          options: [
+            { v: "funzionale", label: "Funzionale" },
+            { v: "estetico",   label: "Estetico" },
+            { v: "entrambi",   label: "Entrambi" }
+          ]
+        },
+        {
+          type: "radio",
+          name: "or-prepast",
+          question: "Hai fatto ortodonzia in passato?",
+          options: [
+            { v: "si", label: "Sì" },
+            { v: "no", label: "No" }
+          ]
+        },
+        {
+          type: "radio",
+          name: "or-soluzione",
+          question: "Soluzione desiderata?",
+          options: [
+            { v: "fissa",       label: "Fissa" },
+            { v: "trasparente", label: "Trasparente" },
+            { v: "non-so",      label: "Non so" }
+          ]
+        },
+        {
+          type: "radio",
+          name: "or-motivazione",
+          question: "Quanto sei motivato ad iniziare?",
+          options: [
+            { v: "poco",     label: "Poco" },
+            { v: "abbastanza",label: "Abbastanza" },
+            { v: "molto",    label: "Molto" }
+          ]
+        }
       ],
-      next: "contatto",
+      next: "contatto"
     },
+
+    // Schermata finale: raccolta contatti
     contatto: {
-      question: "Lasciaci i tuoi contatti, ti richiameremo al più presto.",
-      inputs: ["name", "phone", "email"],
-    },
+      question: "Lasciaci i tuoi recapiti e ti richiameremo presto",
+      fields: [
+        { type: "text",   name: "name",  placeholder: "Nome e Cognome", required: true },
+        { type: "tel",    name: "phone", placeholder: "Numero di telefono", required: true },
+        { type: "email",  name: "email", placeholder: "Email", required: true },
+        { type: "textarea", name: "note", placeholder: "Note aggiuntive (facoltativo)" }
+      ]
+    }
   };
 
+  // Rendering di un singolo step
   function renderStep() {
-    const current = steps[state.step];
-    let html = `<h2>${current.question}</h2><form id="funnel-form">`;
+    const stepDef = steps[state.step];
+    let html = `<h2>${stepDef.question}</h2><form id="funnel-form">`;
 
-    if (current.options) {
-      current.options.forEach(opt => {
+    // opzioni radio/slider
+    if (stepDef.options) {
+      for (const opt of stepDef.options) {
         html += `
           <label>
-            <input type="radio" name="option" value="${opt.value}"/>
+            <input type="radio" name="choice" value="${opt.value}">
             ${opt.label}
-          </label>
-        `;
-      });
+          </label>`;
+      }
     }
 
-    if (current.inputs) {
-      html += `
-        <input type="text" name="name" placeholder="Nome e Cognome" required/>
-        <input type="tel" name="phone" placeholder="Numero di telefono" required/>
-        <input type="email" name="email" placeholder="Email" required/>
-      `;
+    // campi multipli (branches e contatto)
+    if (stepDef.fields) {
+      for (const f of stepDef.fields) {
+        if (f.type === "radio") {
+          html += `<p>${f.question}</p>`;
+          for (const o of f.options) {
+            html += `
+              <label>
+                <input type="radio" name="${f.name}" value="${o.v}">
+                ${o.label}
+              </label>`;
+          }
+        }
+        else if (f.type === "range") {
+          html += `<label>${f.question}<br>
+            <input type="range" name="${f.name}" min="${f.attrs.min}" max="${f.attrs.max}" value="${f.attrs.value}">
+          </label>`;
+        }
+        else if (f.type === "textarea") {
+          html += `<textarea name="${f.name}" placeholder="${f.placeholder}"></textarea>`;
+        }
+        else {
+          html += `<input
+            type="${f.type}"
+            name="${f.name}"
+            placeholder="${f.placeholder}"
+            ${f.required ? "required" : ""}>`;
+        }
+      }
     }
 
-    html += `<button type="submit">Avanti</button></form>`;
+    // bottoni avanti/indietro
+    html += `<div style="margin-top:1rem;">`;
+    if (state.step !== "main") {
+      html += `<button type="button" id="btn-back">Indietro</button>`;
+    }
+    html += `<button type="submit">Avanti</button></div>`;
+    html += `</form>`;
+
     app.innerHTML = html;
+    attachListeners();
+  }
 
+  // Collego eventi a form e bottoni
+  function attachListeners() {
     const form = document.getElementById("funnel-form");
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const formData = new FormData(form);
-      const value = formData.get("option");
+    form.addEventListener("submit", onNext);
 
-      if (state.step === "contatto") {
-        state.answers = {
-          ...state.answers,
-          name: formData.get("name"),
-          phone: formData.get("phone"),
-          email: formData.get("email"),
-        };
-        console.log("Invio dati:", state.answers);
-        alert("Grazie! Ti contatteremo presto.");
-        form.reset();
-        state.step = "main";
-        state.answers = {};
-        renderStep();
-        return;
-      }
-
-      if (!value) {
-        alert("Seleziona un'opzione per proseguire.");
-        return;
-      }
-
-      state.answers[state.step] = value;
-      const next = typeof current.next === "function" ? current.next(value) : current.next;
-      state.step = next;
+    const back = document.getElementById("btn-back");
+    if (back) back.addEventListener("click", () => {
+      // se siamo in contatto torniamo al ramo originario
+      state.step = state.answers._branch || "main";
       renderStep();
     });
   }
 
+  // Gestione click "Avanti"
+  function onNext(e) {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+
+    // Se siamo nella schermata finale di contatto
+    if (state.step === "contatto") {
+      // raccolgo tutti i campi contatto
+      for (const [k, v] of formData.entries()) {
+        state.answers[k] = v;
+      }
+      console.log("Tutte le risposte:", state.answers);
+      alert("Grazie! Ti contatteremo presto.");
+      return;
+    }
+
+    // passo iniziale o ramo
+    if (state.step === "main") {
+      const choice = formData.get("choice");
+      if (!choice) {
+        alert("Seleziona un'opzione per proseguire.");
+        return;
+      }
+      state.answers.choice = choice;
+      state.answers._branch = choice;       // salvo ramo per il back
+      state.step = steps.main.next(choice);
+      renderStep();
+      return;
+    }
+
+    // siamo in un ramo: raccolgo tutti i campi definiti in fields
+    const defs = steps[state.step].fields || [];
+    for (const f of defs) {
+      const val = formData.get(f.name);
+      if (f.required && !val) {
+        alert(`Compila il campo "${f.name}" per proseguire.`);
+        return;
+      }
+      state.answers[f.name] = val;
+    }
+    // poi vado al passo successivo definito
+    state.step = steps[state.step].next || "contatto";
+    renderStep();
+  }
+
+  // Lancio la prima renderizzazione
   renderStep();
+
 });
