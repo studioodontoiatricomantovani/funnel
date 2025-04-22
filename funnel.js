@@ -344,15 +344,34 @@ html += `</div></form>`;
     e.preventDefault();
     const formData = new FormData(e.target);
 
-    // Se siamo nella schermata finale di contatto
-    if (state.step === "contatto") {
-      for (const [k, v] of formData.entries()) {
-        state.answers[k] = v;
-      }
-      console.log("Risposte complete:", state.answers);
-      alert("Grazie! Ti richiameremo presto.");
-      return;
+// Se siamo nella schermata finale di contatto
+if (state.step === "contatto") {
+  // 1) Raccogli tutti i campi
+  for (const [k, v] of formData.entries()) {
+    state.answers[k] = v;
+  }
+
+  // 2) Invia via POST al tuo Web App
+  fetch("https://script.google.com/macros/s/AKfycbxIuzLiLlqYapbrdcjVe5Sj7uppOo0T697hKh9t5fqmuOAlwBG_lVHUnh6lmGURvUBz/exec", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(state.answers)
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.result === "success") {
+      alert("Grazie! Risposte inviate con successo.");
+    } else {
+      alert("Errore invio: " + data.error);
     }
+  })
+  .catch(err => {
+    alert("Impossibile inviare dati: " + err.message);
+  });
+
+  return;
+}
+
 
     // Se siamo nel passo iniziale
     if (state.step === "main") {
