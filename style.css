@@ -43,3 +43,14 @@ input[type="text"], input[type="email"], input[type="tel"], textarea {
   width: 100%;
   font-size: 1rem;
 }
+/* aggiungi in fondo a style.css */
+
+.funnel-buttons {
+  display: flex;
+  gap: 1rem;       /* spazio di 1rem tra i bottoni */
+  margin-top: 1rem;
+}
+
+.funnel-buttons button {
+  flex: none;      /* i bottoni non si allungano */
+}
